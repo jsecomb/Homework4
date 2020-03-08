@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<body>
+
+    <button type="button" id="startBtn">Start</button>
+
+    <br>
+    
+    <p id="text"></p>
+
+    <div id="answerChoices">
+        <button type="button" id="a"></button>
+        <button type="button" id="b"></button>
+        <button type="button" id="c"></button>
+        <button type="button" id="d"></button>
+    </div>
+    
+    <script>
+        var currentQuestion = 0;
+        var questions = [
+            {
+                text: "What is the capital of Lesotho?",
+                choices: [
+                    "Sucre",
+                    "Maseru",
+                    "Yangon",
+                    "Toledo"
+                ],
+                answer: "Maseru"
+            },
+            {
+                text: "What is the capital of Uzbekistan?",
+                choices: [
+                    "Almaty",
+                    "Ashgabat",
+                    "Tashkent",
+                    "Windhoek"
+                ],
+                answer: "Tashkent"
+            }
+        ]
+
+        document.getElementById("startBtn").addEventListener("click", function() {
+            displayQuestion();
+        });
+
+        document.getElementById("answerChoices").addEventListener("click", function() {
+            
+            currentQuestion++;
+
+            displayQuestion();
+
+            
+        });
+
+
+        function displayQuestion() {
+            var text = document.getElementById("text");
+            text.textContent = questions[currentQuestion].text
+            var a = document.getElementById("a");
+            a.textContent = questions[currentQuestion].choices[0]
+            var b = document.getElementById("b");
+            b.textContent = questions[currentQuestion].choices[1]
+            var c = document.getElementById("c");
+            c.textContent = questions[currentQuestion].choices[2]
+            var d = document.getElementById("d");
+            d.textContent = questions[currentQuestion].choices[3]
+        }
+
+       
+
+
+    </script>
+</body>
