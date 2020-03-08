@@ -14,12 +14,15 @@
     <h1 style = "text-align: center">Welcome to the Obscure World Capitals Quiz!</h1>
 
     <div class=Container>
+        <!--Start button-->
         <button type="button" class=startButton id="startBtn">START</button>
     
+        <!--Displays question text-->
         <div id="questionText">
             <p id="text"></p>
         </div>
     
+        <!--Builds answer buttons-->
         <div id="answerChoices">
             <button type="button" class=responseButton id="a"></button>
             <button type="button" class=responseButton id="b"></button>
@@ -37,10 +40,13 @@
 
     </div>
     
-    <script>
+    <script> 
+        //declares global variables and sets values
         var points = 0;
         var timeRemaining = 60;
         var currentQuestion = 0;
+        
+        //quiz questions and answers are envetered as objects within an array
         var questions = [
             {
                 text: "What is the capital of Lesotho?",
@@ -86,12 +92,12 @@
 
         document.getElementById("answerChoices").style.display = "none"; //answer buttons do not display initially
 
-        document.getElementById("startBtn").addEventListener("click", function() {
+        document.getElementById("startBtn").addEventListener("click", function() { //start button initializes timer and display questions function
             startTimer();
             displayQuestion();
         });
 
-        function displayQuestion() {
+        function displayQuestion() { //function displays question text and answer options from questions array. If statement prevents it from trying to display questions/answers past the array length.
 
             if (currentQuestion < questions.length) {
                 document.getElementById("answerChoices").style.display = "block"; //display HTML button elements
@@ -107,12 +113,12 @@
                 d.textContent = questions[currentQuestion].choices[3]
             } 
             else {
-                endScreen()
+                endScreen() //if all questions have been displayed, endScreen function is called
             }
             
         }
 
-        document.getElementById("answerChoices").addEventListener("click", function(event) {
+        document.getElementById("answerChoices").addEventListener("click", function(event) { //event handler targets answer button clicked by user
             var choiceButton = event.target
 
             if (choiceButton.textContent === questions[currentQuestion].answer){ //if statement records if response is correct
@@ -124,21 +130,30 @@
                 timeRemaining = timeRemaining -10; //subtracts 10 seconds if incorrect
             }
 
-            currentQuestion++;
-            displayQuestion();
+            currentQuestion++; //this increases index of question array to setup for next question/answers
+            displayQuestion(); //displayQuestion called to display next question/answers
         });
 
-        function startTimer(){
+        function startTimer(){ //timer function
                 setInterval(function(){ 
-                    if (timeRemaining > 0 && currentQuestion < questions.length){ //if statement stops timer at 0 sec or if user has answered all questions
+                    //decreases time by one second if timer is above 0 and not all questions have been answered
+                    if (timeRemaining > 0 && currentQuestion < questions.length){ 
                     timeRemaining--;
                     }
-                document.getElementById("seconds").textContent=timeRemaining;
+                document.getElementById("seconds").textContent=timeRemaining; //sets html timer text to value of timeRemaining
                 }, 1000);
         }
+
+        if (timeRemaining === 0){ //quiz ends if time is up
+            endScreen();
+        }
         
-        function endScreen(){
-            alert("your score is " + points + " points.")
+        //alerts final score and saves user initials and score to local storage
+        function endScreen() {
+            alert("Your final score is " + points + "!");
+            var initials = prompt("Please enter your initials to save your score");
+            window.localStorage.setItem(JSON.stringify(points), "");
+            window.localStorage.setItem(initials, "");
         }
 
     </script>
