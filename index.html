@@ -1,20 +1,39 @@
 <!DOCTYPE html>
+
+<head>
+    <title>World Capitals Quiz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
 <body>
 
-    <button type="button" id="startBtn">Start</button>
+    <h1>Welcome to the Obscure World Capitals Quiz!</h1>
 
-    <br>
+    <button type = "button" class = startButton id="startBtn">Start</button>
     
-    <p id="text"></p>
+    <p id = "text"></p>
 
-    <div id="answerChoices">
-        <button type="button" id="a"></button>
-        <button type="button" id="b"></button>
-        <button type="button" id="c"></button>
-        <button type="button" id="d"></button>
+    <div id = "answerChoices">
+        <button type="button" class = responseButton id="a"></button>
+        <button type="button" class = responseButton id="b"></button>
+        <button type="button" class = responseButton id="c"></button>
+        <button type="button" class = responseButton id="d"></button>
     </div>
+
+    <div id = "counter">
+        <span id="minutes">0</span>
+        <span id="colon">:</span>
+        <span id="seconds">60</span>
+    </div>
+
     
     <script>
+        var points = 0;
+        var timeRemaining = 60;
         var currentQuestion = 0;
         var questions = [
             {
@@ -36,38 +55,90 @@
                     "Windhoek"
                 ],
                 answer: "Tashkent"
+            },
+            {
+                text: "What is the capital of Montenegro?",
+                choices: [
+                    "Podgorica",
+                    "Belgrade",
+                    "Skopje",
+                    "Tirana"
+                ],
+                answer: "Podgorica"
+            },
+            {
+                text: "What is the capital of Belize?",
+                choices: [
+                    "Tegucigalpa",
+                    "San Jose",
+                    "Belmopan",
+                    "Quito"
+                ],
+                answer: "Belmopan"
             }
         ]
 
+        document.getElementById("answerChoices").style.display = "none"; //answer buttons do not display initially
+
         document.getElementById("startBtn").addEventListener("click", function() {
+            startTimer();
             displayQuestion();
         });
-
-        document.getElementById("answerChoices").addEventListener("click", function() {
-            
-            currentQuestion++;
-
-            displayQuestion();
-
-            
-        });
-
 
         function displayQuestion() {
-            var text = document.getElementById("text");
-            text.textContent = questions[currentQuestion].text
-            var a = document.getElementById("a");
-            a.textContent = questions[currentQuestion].choices[0]
-            var b = document.getElementById("b");
-            b.textContent = questions[currentQuestion].choices[1]
-            var c = document.getElementById("c");
-            c.textContent = questions[currentQuestion].choices[2]
-            var d = document.getElementById("d");
-            d.textContent = questions[currentQuestion].choices[3]
+
+            if (currentQuestion < questions.length) {
+                document.getElementById("answerChoices").style.display = "block"; //display HTML button elements
+                var text = document.getElementById("text");
+                text.textContent = questions[currentQuestion].text
+                var a = document.getElementById("a");
+                a.textContent = questions[currentQuestion].choices[0]
+                var b = document.getElementById("b");
+                b.textContent = questions[currentQuestion].choices[1]
+                var c = document.getElementById("c");
+                c.textContent = questions[currentQuestion].choices[2]
+                var d = document.getElementById("d");
+                d.textContent = questions[currentQuestion].choices[3]
+            } 
+            else {
+                endScreen()
+            }
+            
         }
 
-       
+        document.getElementById("answerChoices").addEventListener("click", function(event) {
+            var choiceButton = event.target
 
+            if (choiceButton.textContent === questions[currentQuestion].answer){ //if statement records if response is correct
+                console.log("correct");
+                points++; //adds a point if correct
+            }
+            else {
+                console.log("incorrect");
+                timeRemaining = timeRemaining -10; //subtracts 10 seconds if incorrect
+            }
+
+            currentQuestion++;
+            displayQuestion();
+        });
+
+        function startTimer(){
+                setInterval(function(){ 
+                    if (timeRemaining > 0 && currentQuestion < questions.length){ //if statement stops timer at 0 sec or if user has answered all questions
+                    timeRemaining--;
+                    }
+                document.getElementById("seconds").textContent=timeRemaining;
+                }, 1000);
+        }
+        
+        function endScreen(){
+            alert("your score is " + points + " points.")
+        }
 
     </script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
 </body>

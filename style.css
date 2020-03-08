@@ -1,0 +1,19 @@
+.responseButton {
+    background-color: oldlace;
+    border-style: outset;
+    border-radius: 10px;
+    padding: 8px;
+    margin: 12px:
+}
+
+.startButton {
+    background-color: aqua;
+    border-style: outset;
+    border-radius: 10px;
+    padding: 12px;
+    margin: 12px;
+}
+
+h1{
+    text-align: center;
+}
