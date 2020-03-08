@@ -11,25 +11,31 @@
 
 <body>
 
-    <h1>Welcome to the Obscure World Capitals Quiz!</h1>
+    <h1 style = "text-align: center">Welcome to the Obscure World Capitals Quiz!</h1>
 
-    <button type = "button" class = startButton id="startBtn">Start</button>
+    <div class=Container>
+        <button type="button" class=startButton id="startBtn">START</button>
     
-    <p id = "text"></p>
+        <div id="questionText">
+            <p id="text"></p>
+        </div>
+    
+        <div id="answerChoices">
+            <button type="button" class=responseButton id="a"></button>
+            <button type="button" class=responseButton id="b"></button>
+            <button type="button" class=responseButton id="c"></button>
+            <button type="button" class=responseButton id="d"></button>
+        </div>
+    
+        <div class="counterContainer">
+            <div id="counter">
+                <span id="minutes">0</span>
+                <span id="colon">:</span>
+                <span id="seconds">60</span>
+            </div>
+        </div>
 
-    <div id = "answerChoices">
-        <button type="button" class = responseButton id="a"></button>
-        <button type="button" class = responseButton id="b"></button>
-        <button type="button" class = responseButton id="c"></button>
-        <button type="button" class = responseButton id="d"></button>
     </div>
-
-    <div id = "counter">
-        <span id="minutes">0</span>
-        <span id="colon">:</span>
-        <span id="seconds">60</span>
-    </div>
-
     
     <script>
         var points = 0;
