@@ -3,6 +3,7 @@
 <head>
     <title>World Capitals Quiz</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
@@ -41,6 +42,8 @@
     </div>
     
     <script> 
+
+    $(document).ready(function() {
         //declares global variables and sets values
         var points = 0;
         var timeRemaining = 60;
@@ -138,14 +141,13 @@
                 setInterval(function(){ 
                     //decreases time by one second if timer is above 0 and not all questions have been answered
                     if (timeRemaining > 0 && currentQuestion < questions.length){ 
-                    timeRemaining--;
+                        timeRemaining--;
+                    }
+                    else if (timeRemaining === 0){ //quiz ends if time is up
+                        endScreen();
                     }
                 document.getElementById("seconds").textContent=timeRemaining; //sets html timer text to value of timeRemaining
                 }, 1000);
-        }
-
-        if (timeRemaining === 0){ //quiz ends if time is up
-            endScreen();
         }
         
         //alerts final score and saves user initials and score to local storage
@@ -155,6 +157,7 @@
             window.localStorage.setItem(JSON.stringify(points), "");
             window.localStorage.setItem(initials, "");
         }
+    });
 
     </script>
 
