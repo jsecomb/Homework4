@@ -48,6 +48,7 @@
         var points = 0;
         var timeRemaining = 60;
         var currentQuestion = 0;
+        var currentHigh = JSON.parse(window.localStorage.getItem("highScore")); //retreives current high score from local storage
         
         //quiz questions and answers are envetered as objects within an array
         var questions = [
@@ -111,7 +112,6 @@
         });
 
         function displayQuestion() { //function displays question text and answer options from questions array. If statement prevents it from trying to display questions/answers past the array length.
-
             if (currentQuestion < questions.length) {
                 document.getElementById("answerChoices").style.display = "block"; //display HTML button elements
                 var text = document.getElementById("text");
@@ -122,13 +122,9 @@
                 b.textContent = questions[currentQuestion].choices[1]
                 var c = document.getElementById("c");
                 c.textContent = questions[currentQuestion].choices[2]
-                var d = document.getElementById("d");
+                var d = document.getElementById("d"); 
                 d.textContent = questions[currentQuestion].choices[3]
-            } 
-            else {
-                endScreen() //if all questions have been displayed, endScreen function is called
-            }
-            
+            }     
         }
 
         document.getElementById("answerChoices").addEventListener("click", function(event) { //event handler targets answer button clicked by user
@@ -153,7 +149,7 @@
                 if (timeRemaining > 0 && currentQuestion < questions.length) {
                     timeRemaining--;
                 }
-                else if (timeRemaining == 0) { //quiz ends if time is up
+                else if (timeRemaining == 0 || currentQuestion >= questions.length) { //quiz ends if time is up or all questions answered
                     endScreen();
                     clearInterval(countdown); //stops setInterval function
                 }
@@ -161,15 +157,23 @@
             }, 1000);
         }
         
-        //alerts final score, clears variable values, and saves user initials and score to local storage
+        //alerts final score, clears variable values, and saves user initials and score to local storage if they are new high score
         function endScreen() {
             alert("Your final score is " + points + "!");
             var initials = prompt("Please enter your initials to save your score");
+        
+            if (points > currentHigh) {
+                window.localStorage.setItem("highScore", JSON.stringify(points));
+                window.localStorage.setItem("name", initials);
+                alert("You have the new high score!")
+            }
+            else {
+                alert("you do not have the high score!")
+            }
+            
             points = 0;
             timeRemaining = 60;
             currentQuestion = 0;
-            window.localStorage.setItem(JSON.stringify(points), "");
-            window.localStorage.setItem(initials, "");
         }
     });
 
