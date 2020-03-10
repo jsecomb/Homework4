@@ -49,6 +49,10 @@
         var timeRemaining = 60;
         var currentQuestion = 0;
         var currentHigh = JSON.parse(window.localStorage.getItem("highScore")); //retreives current high score from local storage
+        var initials = window.localStorage.getItem("name"); //retreives current high scorer from storage
+
+        console.log(currentHigh);
+        console.log(initials);
         
         //quiz questions and answers are envetered as objects within an array
         var questions = [
@@ -160,15 +164,18 @@
         //alerts final score, clears variable values, and saves user initials and score to local storage if they are new high score
         function endScreen() {
             alert("Your final score is " + points + "!");
-            var initials = prompt("Please enter your initials to save your score");
+
+            console.log(currentHigh);
         
-            if (points > currentHigh) {
+            if (points >= currentHigh) { //stores high scores in local storage
+                currentHigh = points; //sets currentHigh to new high score
+                alert("You have the new high score!")
+                initials = prompt("Please enter your initials to save your score"); //sets initials to prompt from high scorer
                 window.localStorage.setItem("highScore", JSON.stringify(points));
                 window.localStorage.setItem("name", initials);
-                alert("You have the new high score!")
             }
-            else {
-                alert("you do not have the high score!")
+            else { //notifies you if you do not have high score.
+                alert("You do not have the high score! Highest score is " + currentHigh + " by " + initials + ".");
             }
             
             points = 0;
