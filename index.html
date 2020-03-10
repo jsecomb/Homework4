@@ -90,6 +90,16 @@
                     "Quito"
                 ],
                 answer: "Belmopan"
+            },
+            {
+                text: "What is the capital of Myanmar?",
+                choices: [
+                    "Naypyidaw",
+                    "Phnom Penh",
+                    "Thimphu",
+                    "Vientiane"
+                ],
+                answer: "Naypyidaw"
             }
         ]
 
@@ -137,23 +147,27 @@
             displayQuestion(); //displayQuestion called to display next question/answers
         });
 
-        function startTimer(){ //timer function
-                setInterval(function(){ 
-                    //decreases time by one second if timer is above 0 and not all questions have been answered
-                    if (timeRemaining > 0 && currentQuestion < questions.length){ 
-                        timeRemaining--;
-                    }
-                    else if (timeRemaining === 0){ //quiz ends if time is up
-                        endScreen();
-                    }
-                document.getElementById("seconds").textContent=timeRemaining; //sets html timer text to value of timeRemaining
-                }, 1000);
+        function startTimer() { //timer function
+            var countdown = setInterval(function () {
+                //decreases time by one second if timer is above 0 and not all questions have been answered
+                if (timeRemaining > 0 && currentQuestion < questions.length) {
+                    timeRemaining--;
+                }
+                else if (timeRemaining == 0) { //quiz ends if time is up
+                    endScreen();
+                    clearInterval(countdown); //stops setInterval function
+                }
+                document.getElementById("seconds").textContent = timeRemaining; //sets html timer text to value of timeRemaining
+            }, 1000);
         }
         
-        //alerts final score and saves user initials and score to local storage
+        //alerts final score, clears variable values, and saves user initials and score to local storage
         function endScreen() {
             alert("Your final score is " + points + "!");
             var initials = prompt("Please enter your initials to save your score");
+            points = 0;
+            timeRemaining = 60;
+            currentQuestion = 0;
             window.localStorage.setItem(JSON.stringify(points), "");
             window.localStorage.setItem(initials, "");
         }
